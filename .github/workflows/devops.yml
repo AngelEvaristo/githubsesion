@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 #(1)
 jobs:
-  extract_version:
+  Compilacion:
     runs-on: ubuntu-latest
     # outputs:
     #   version: ${{ steps.extract_version.outputs.version }}    
