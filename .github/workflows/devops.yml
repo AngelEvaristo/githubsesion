@@ -1,0 +1,31 @@
+name: GITHUBnpm
+
+run-name: "GITHUB NPM"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+#(1)
+jobs:
+  extract_version:
+    runs-on: ubuntu-latest
+    # outputs:
+    #   version: ${{ steps.extract_version.outputs.version }}    
+    steps:
+      - uses: actions/checkout@v4  
+
+      - name: Setear versión de Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'   # Cambia a la versión que necesites
+          cache: 'npm'         # Opcional: cachea dependencias npm
+
+      - name: Instalar dependencias
+        run: |
+          npm install -g @angular/cli
+          npm install
+
+      - name: Compilar aplicación
+        run: ng build --configuration production
