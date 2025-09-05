@@ -29,7 +29,7 @@ jobs:
       - name: Setear versión de Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ github.event.inputs.version }   # Cambia a la versión que necesites
+          node-version: "${{ github.event.inputs.version }"   # Cambia a la versión que necesites
           cache: 'npm'         # Opcional: cachea dependencias npm
 
       - name: Instalar dependencias
