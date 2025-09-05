@@ -59,7 +59,7 @@ jobs:
       - name: Publicar artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: app-zip
+          name: app-zip2
           path: app.zip
 
 ## REUSABLE 
