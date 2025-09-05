@@ -2,5 +2,5 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000',
-  apiKey: "AKIAIOSFODNN7EXAMPLE"
+  githubToken: "ErSyL4mdy1M2ELcQSFoS8CW1nkZXyp0KBaeN"
 };
