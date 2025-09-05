@@ -41,13 +41,20 @@ jobs:
       - name: Compilar aplicación
         run: ng build --configuration production
 
-      - name: Crear archivo ZIP con PowerShell
-        shell: pwsh
-        run: |
-          if (Test-Path app.zip) { Remove-Item app.zip -Force }
-          Push-Location dist/my-first-angular-app/browser
-          Compress-Archive -Path * -DestinationPath $env:GITHUB_WORKSPACE/app.zip
-          Pop-Location
+      # - name: Crear archivo ZIP con PowerShell
+      #   shell: pwsh
+      #   run: |
+      #     if (Test-Path app.zip) { Remove-Item app.zip -Force }
+      #     Push-Location dist/my-first-angular-app/browser
+      #     Compress-Archive -Path * -DestinationPath $env:GITHUB_WORKSPACE/app.zip
+      #     Pop-Location
+
+#COMPOSE
+      - name: Crear ZIP usando composite action
+        uses: ./.github/actions/create-zip
+        with:
+          source: dist/my-first-angular-app/browser
+          output: app.zip
 
       - name: Publicar artefacto
         uses: actions/upload-artifact@v4
@@ -55,41 +62,12 @@ jobs:
           name: app-zip
           path: app.zip
 
-  Compilacion2:
-    runs-on: ubuntu-latest
-    # outputs:
-    #   version: ${{ steps.extract_version.outputs.version }}    
-    steps:
-      - uses: actions/checkout@v4  
-
-      - name: Setear versión de Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "${{ inputs.version }}"   # Cambia a la versión que necesites
-          cache: 'npm'         # Opcional: cachea dependencias npm
-
-      - name: Instalar dependencias
-        run: |
-          echo "Versión: ${{ inputs.version }}"
-          npm install -g @angular/cli
-          npm install
-
-      - name: Compilar aplicación
-        run: ng build --configuration production
-
-      - name: Crear archivo ZIP con PowerShell
-        shell: pwsh
-        run: |
-          if (Test-Path app.zip) { Remove-Item app.zip -Force }
-          Push-Location dist/my-first-angular-app/browser
-          Compress-Archive -Path * -DestinationPath $env:GITHUB_WORKSPACE/app.zip
-          Pop-Location
-
-      - name: Publicar artefacto
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-zip2
-          path: app.zip
+## REUSABLE 
+  call-build:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      app-name: "mi-webapp-angular"
+      source-path: "dist/my-first-angular-app/browser"
 
   # deploy:
   #   runs-on: ubuntu-latest
