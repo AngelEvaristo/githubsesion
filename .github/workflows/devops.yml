@@ -29,12 +29,12 @@ jobs:
       - name: Setear versión de Node
         uses: actions/setup-node@v4
         with:
-          node-version: "${{ github.event.inputs.version }"   # Cambia a la versión que necesites
+          node-version: "${{ inputs.version }}"   # Cambia a la versión que necesites
           cache: 'npm'         # Opcional: cachea dependencias npm
 
       - name: Instalar dependencias
         run: |
-          echo "Versión: ${{ github.event.inputs.version }}"
+          echo "Versión: ${{ inputs.version }}"
           npm install -g @angular/cli
           npm install
 
