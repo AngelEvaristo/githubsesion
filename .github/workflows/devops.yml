@@ -19,6 +19,14 @@ on:
         default: "latest"  
 #(1)
 jobs:
+  docker-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a Docker action (Alpine)
+        uses: docker://alpine:3.18
+        with:
+          args: echo "Hola desde Alpine dentro de GitHub Actions"
+
   Compilacion:
     runs-on: ubuntu-latest
     # outputs:
