@@ -3,14 +3,20 @@ name: GITHUBnpm
 run-name: "GITHUB NPM"
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: "50 0 * * *"           
-  workflow_dispatch: {}
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
+  #   branches: [ "main" ]
+  # schedule:
+  #   - cron: "50 0 * * *"           
+  # workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versión de la app"
+        required: false
+        default: "latest"  
 #(1)
 jobs:
   Compilacion:
@@ -23,11 +29,12 @@ jobs:
       - name: Setear versión de Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'   # Cambia a la versión que necesites
+          node-version: ${{ github.event.inputs.version }   # Cambia a la versión que necesites
           cache: 'npm'         # Opcional: cachea dependencias npm
 
       - name: Instalar dependencias
         run: |
+          echo "Versión: ${{ github.event.inputs.version }}"
           npm install -g @angular/cli
           npm install
 
