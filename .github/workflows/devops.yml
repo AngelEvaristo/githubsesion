@@ -51,7 +51,7 @@ jobs:
 
 #COMPOSE
       - name: Crear ZIP usando composite action
-        uses: ./.github/actions/create-zip
+        uses: ./.github/actions/createzip
         with:
           source: dist/my-first-angular-app/browser
           output: app.zip
