@@ -33,11 +33,13 @@ jobs:
       - name: Compilar aplicación
         run: ng build --configuration production
 
-      - name: Crear ZIP usando composite action
-        uses: ./.github/actions/create-zip
-        with:
-          source: ${{ inputs.source-path }}
-          output: app.zip
+      - name: Crear archivo ZIP con PowerShell
+        shell: pwsh
+        run: |
+          if (Test-Path app.zip) { Remove-Item app.zip -Force }
+          Push-Location ${{ inputs.source }}
+          Compress-Archive -Path * -DestinationPath $env:GITHUB_WORKSPACE/app.zip
+          Pop-Location
 
       - name: Publicar artefacto
         uses: actions/upload-artifact@v4
