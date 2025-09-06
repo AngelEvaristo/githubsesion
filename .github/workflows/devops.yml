@@ -108,7 +108,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: app-zip
+          name: app-zip2
           path: .
       - name: TASK ENV
         run: |
