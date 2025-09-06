@@ -68,7 +68,7 @@ jobs:
       # 3. Sincronizar archivos con S3
       - name: Sync files to S3
         run: |
-          cd ist/my-first-angular-app/browser
+          cd dist/my-first-angular-app/browser
           dir
           aws s3 rm s3://sesion2s3front --recursive
           aws s3 sync . s3://sesion2s3front
@@ -100,29 +100,29 @@ jobs:
       app-name: "mi-webapp-angular"
       source-path: "dist/my-first-angular-app/browser"  
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: Compilacion
-    steps:
-  #     - name: Descargar artefacto
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: app-zip
-  #         path: .
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: Compilacion
+  #   steps:
+  # #     - name: Descargar artefacto
+  # #       uses: actions/download-artifact@v4
+  # #       with:
+  # #         name: app-zip
+  # #         path: .
 
-      - name: Login en Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-  #     - name: Deploy al Web App
-  #       uses: azure/webapps-deploy@v3
+  #     - name: Login en Azure
+  #       uses: azure/login@v2
   #       with:
-  #         app-name: "sesion3front"   # reemplaza con el nombre real
-  #         package: app.zip
-      - name: Deploy to Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: "pruebarapidaacr"   # 👈 Nombre de tu Web App
-          images: devopspruebatecylab.azurecr.io/minimalapi:1.2.7  
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+  # #     - name: Deploy al Web App
+  # #       uses: azure/webapps-deploy@v3
+  # #       with:
+  # #         app-name: "sesion3front"   # reemplaza con el nombre real
+  # #         package: app.zip
+  #     - name: Deploy to Web App
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: "pruebarapidaacr"   # 👈 Nombre de tu Web App
+  #         images: devopspruebatecylab.azurecr.io/minimalapi:1.2.7  
           
