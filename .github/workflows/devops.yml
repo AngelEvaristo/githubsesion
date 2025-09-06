@@ -56,6 +56,24 @@ jobs:
       #     Push-Location dist/my-first-angular-app/browser
       #     Compress-Archive -Path * -DestinationPath $env:GITHUB_WORKSPACE/app.zip
       #     Pop-Location
+##AWS ####
+      # 2. Configurar credenciales AWS
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1   # 👈 ajusta a tu región
+
+      # 3. Sincronizar archivos con S3
+      - name: Sync files to S3
+        run: |
+          cd ist/my-first-angular-app/browser
+          dir
+          aws s3 rm s3://sesion2s3front --recursive
+          aws s3 sync . s3://sesion2s3front
+          aws s3 ls s3://sesion2s3front               
+#######
 
 #COMPOSE
       - name: Crear ZIP usando composite action
@@ -108,17 +126,3 @@ jobs:
           app-name: "pruebarapidaacr"   # 👈 Nombre de tu Web App
           images: devopspruebatecylab.azurecr.io/minimalapi:1.2.7  
           
-      # - name: Deploy to Web App with Azure CLI
-      #   run: |
-      #     az webapp config container set \
-      #       --resource-group <TU_RESOURCE_GROUP> \
-      #       --name <TU_WEBAPP_NAME> \
-      #       --docker-custom-image-name $IMAGE_NAME \
-      #       --docker-registry-server-url https://<TU-ACR-NAME>.azurecr.io \
-      #       --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
-      #       --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
-
-      #     # Reiniciar la WebApp para asegurar que use la nueva imagen
-      #     az webapp restart \
-      #       --resource-group <TU_RESOURCE_GROUP> \
-      #       --name <TU_WEBAPP_NAME>  
