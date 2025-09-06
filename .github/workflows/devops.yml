@@ -112,7 +112,7 @@ jobs:
           path: .
       - name: TASK ENV
         run: |
-          echo "${{ vars.TASK_USER }}"
+          echo "${{ vars.PRUEBA }}"
            
 
   # deploy:
